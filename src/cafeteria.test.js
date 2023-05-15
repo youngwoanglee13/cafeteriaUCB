@@ -16,4 +16,10 @@ describe("Sumar", () => {
     cafeteria.hacerReserva(3,5);
     expect(cafeteria.getReservas().length).toEqual(1);
   });
+  it("Si el producto no existe devolvera: Producto no encontrado", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    //cafeteria.hacerReserva(3,5);
+    expect(cafeteria.hacerReserva(10,2)).toBe('Producto no encontrado');
+  });
 });

@@ -45,7 +45,7 @@ class Cafeteria {
     const producto = this.productos.find((p) => p.id === idProducto);
     if (!producto) {
       console.log("Producto no encontrado");
-      return;
+      return "Producto no encontrado";
     }
     if (producto.cantidad < cantidad) {
       console.log("No hay suficientes productos disponibles");
