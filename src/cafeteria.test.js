@@ -10,5 +10,10 @@ describe("Sumar", () => {
     cafeteria.cargarProductos();
     expect(cafeteria.getProductos().length).toEqual(4);
   });
-  
+  it("devolver la recerva del producto y su cantidad", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3,5);
+    expect(cafeteria.getReservas().length).toEqual(1);
+  });
 });
