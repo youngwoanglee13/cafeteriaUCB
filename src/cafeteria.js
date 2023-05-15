@@ -48,8 +48,8 @@ class Cafeteria {
       return "Producto no encontrado";
     }
     if (producto.cantidad < cantidad) {
-      console.log("No hay suficientes productos disponibles");
-      return;
+      console.log("No hay suficiente STOCK disponible");
+      return "No hay suficiente STOCK disponible";
     }
     producto.cantidad -= cantidad;
     const reserva = {

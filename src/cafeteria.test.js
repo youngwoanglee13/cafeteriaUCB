@@ -19,7 +19,11 @@ describe("Sumar", () => {
   it("Si el producto no existe devolvera: Producto no encontrado", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    //cafeteria.hacerReserva(3,5);
     expect(cafeteria.hacerReserva(10,2)).toBe('Producto no encontrado');
+  });
+  it("Si la cantidad del producto es demaciado: No hay suficiente STOCK disponible", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.hacerReserva(3,22)).toBe('No hay suficiente STOCK disponible');
   });
 });
