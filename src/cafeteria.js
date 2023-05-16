@@ -41,7 +41,7 @@ class Cafeteria {
         },
       ];
     }
-    
+
     hacerReserva(idProducto, cantidad) {
       const producto = this.productos.find((p) => p.id === idProducto);
       if (!producto) {
@@ -60,7 +60,7 @@ class Cafeteria {
       };
       this.reservas.push(reserva);
       console.log("Reserva creada:", reserva);
-      return "Reserva creada:" + reserva.cantidad + ' x ' + producto.nombre;
+      return "Reserva creada: " + reserva.cantidad + ' x ' + producto.nombre + producto + "Bs. "+ producto.precio;
     }
   
     getReservas() {
