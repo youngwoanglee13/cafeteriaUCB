@@ -1,8 +1,33 @@
-<html>
-  <body>
-    <h1>Menu Cafeteria</h1>
-    <ul id="menu-cafeteria"></ul>
-    <script type="module" src="./src/presenter.js"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafeteria UCB</title>
+</head>
+
+<body>
+  <h1>Menu Cafeteria</h1>
+  <ul id="menu-cafeteria"></ul>
+
+  <hr>
+
+  <h1>Hacer una reserva</h1>
+  <form id="reservaForm">
+    <label for="producto">Producto:</label>
+    <select id="producto" name="producto"></select>
+    <br>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" name="cantidad" min="1" max="10" required>
+    <br>
+    <button type="submit">Reservar</button>
+  </form>
+  <h1>Reservas realizadas</h1>
+  <ul id="reservas"></ul>
+
+  <script type="module" src="./src/presenter.js"></script>
+</body>
+
+</html>
