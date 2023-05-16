@@ -59,6 +59,7 @@ class Cafeteria {
     };
     this.reservas.push(reserva);
     console.log("Reserva creada:", reserva);
+    return "Reserva creada:" + reserva.cantidad + ' x ' + producto.nombre;
   }
 
   getReservas() {
