@@ -1,7 +1,30 @@
 import Cafeteria from "./cafeteria";
 
-let cafeteria = new Cafeteria();
+//let cafeteria = new Cafeteria();
 cafeteria.cargarProductos();
+
+const agregarProductoForm = document.querySelector("#agregarProductoForm");
+agregarProductoForm.addEventListener("submit", agregarProductoHandler);
+
+// Controlador de eventos para agregar producto
+function agregarProductoHandler(event) {
+  event.preventDefault();
+
+  const nombreInput = document.querySelector("#nombre");
+  const descripcionInput = document.querySelector("#descripcion");
+  const precioInput = document.querySelector("#precio");
+  const categoriaInput = document.querySelector("#categoria");
+  const cantidadInput = document.querySelector("#cantidad");
+
+  // Llamar a la función agregarProducto de la instancia de Cafeteria
+  const cafeteria = new Cafeteria();
+  cafeteria.agregarProducto(
+    nombreInput.value,
+    descripcionInput.value,
+    precioInput.value,
+    categoriaInput.value,
+    cantidadInput.value
+  );
 
 const lista = document.querySelector("#menu-cafeteria");
 let productos;
