@@ -8,7 +8,7 @@ describe("Cafeteria", () => {
   it("deberia devolver cantidad de productos disponibles", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.getProductos().length).toEqual(4);
+    expect(cafeteria.getProductos().length).toEqual(5);
   });
   it("devolver la recerva del producto y su cantidad", () => {
     const cafeteria = new Cafeteria();
@@ -30,10 +30,17 @@ describe("Cafeteria", () => {
   const cafeteria = new Cafeteria();
   cafeteria.cargarProductos();
   cafeteria.eliminarProducto(2);
-  expect(cafeteria.getProductos().length).toEqual(3);
+  expect(cafeteria.getProductos().length).toEqual(4);
   });
   it("deberia devolver 'Producto no encontrado' al intentar eliminar un producto sin cargar productos", () => {
     const cafeteria = new Cafeteria();
     expect(cafeteria.eliminarProducto(1)).toBe("Producto no encontrado");
   });
+  it("deberia devolver las categorias de los productos", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getCategorias().length).toEqual(2);
+  });
+
+  
 });
