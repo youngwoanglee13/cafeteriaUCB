@@ -1,6 +1,6 @@
 import Cafeteria from "./cafeteria.js";
 
-describe("Sumar", () => {
+describe("Cafeteria", () => {
   it("deberia devolver 0 al no tener productos disponibles", () => {
     const cafeteria = new Cafeteria();
     expect(cafeteria.getProductos().length).toEqual(0);
@@ -25,5 +25,15 @@ describe("Sumar", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
     expect(cafeteria.hacerReserva(3,22)).toBe('No hay suficiente STOCK disponible');
+  });
+  it("deberia eliminar un producto existente", () => {
+  const cafeteria = new Cafeteria();
+  cafeteria.cargarProductos();
+  cafeteria.eliminarProducto(2);
+  expect(cafeteria.getProductos().length).toEqual(3);
+  });
+  it("deberia devolver 'Producto no encontrado' al intentar eliminar un producto sin cargar productos", () => {
+    const cafeteria = new Cafeteria();
+    expect(cafeteria.eliminarProducto(1)).toBe("Producto no encontrado");
   });
 });
