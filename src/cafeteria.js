@@ -1,17 +1,17 @@
 class Cafeteria {
     productos = [];
     reservas = [];
-   
+    ultimoId = 0;
   
     getProductos() {
       return this.productos;
     }
 
     agregarProducto(nombre, descripcion, precio, categoria, cantidad) {
+      this.ultimoId++;
       
-
       const producto = {
-      
+        id: this.ultimoId,
         nombre,
         descripcion,
         precio,

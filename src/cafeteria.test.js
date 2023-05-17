@@ -8,6 +8,15 @@ describe("Sumar", () => {
     expect(cafeteria.getProductos().length).toEqual(1);
   });
 
+  it("debería asignar un id autoincremental al producto agregado", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 10);
+    cafeteria.agregarProducto("Croissant", "Crujiente croissant recién horneado", 2.0, "Panadería", 20);
+    const productos = cafeteria.getProductos();
+    expect(productos[0].id).toEqual(1);
+    expect(productos[1].id).toEqual(2);
+  });
+
   it("deberia devolver 0 al no tener productos disponibles", () => {
     const cafeteria = new Cafeteria();
     expect(cafeteria.getProductos().length).toEqual(0);
