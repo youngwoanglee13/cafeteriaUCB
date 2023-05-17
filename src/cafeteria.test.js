@@ -41,6 +41,15 @@ describe("Cafeteria", () => {
     cafeteria.cargarProductos();
     expect(cafeteria.getCategorias().length).toEqual(2);
   });
-
+  it("deberia devolver todos los productos con categoria todas", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getProductosPorCategoria("todas").length).toEqual(5);
+  });
+  it("deberia devolver todos los productos con categoria almuerzo", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getProductosPorCategoria("almuerzo").length).toEqual(2);
+  });
   
 });
