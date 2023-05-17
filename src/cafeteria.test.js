@@ -10,5 +10,30 @@ describe("Sumar", () => {
     cafeteria.cargarProductos();
     expect(cafeteria.getProductos().length).toEqual(4);
   });
-  
+  it("devolver la recerva del producto y su cantidad", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3,5);
+    expect(cafeteria.getReservas().length).toEqual(1);
+  });
+  it("Si el producto no existe devolvera: Producto no encontrado", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.hacerReserva(10,2)).toBe('Producto no encontrado');
+  });
+  it("Si la cantidad del producto es demaciado: No hay suficiente STOCK disponible", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.hacerReserva(3,22)).toBe('No hay suficiente STOCK disponible');
+  });
+  it("deberia eliminar un producto existente", () => {
+  const cafeteria = new Cafeteria();
+  cafeteria.cargarProductos();
+  cafeteria.eliminarProducto(2);
+  expect(cafeteria.getProductos().length).toEqual(3);
+  });
+  it("deberia devolver 'Producto no encontrado' al intentar eliminar un producto sin cargar productos", () => {
+    const cafeteria = new Cafeteria();
+    expect(cafeteria.eliminarProducto(1)).toBe("Producto no encontrado");
+  });
 });
