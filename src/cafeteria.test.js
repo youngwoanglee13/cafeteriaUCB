@@ -6,6 +6,17 @@ it("debería agregar un nuevo producto al array de productos", () => {
   expect(cafeteria.getProductos().length).toEqual(1);
 });
 
+it("debería devolver el producto agregado correctamente", () => {
+  const cafeteria = new Cafeteria();
+  const producto = cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 10);
+  expect(producto.nombre).toEqual("Café Latte");
+  expect(producto.descripcion).toEqual("Delicioso café con leche");
+  expect(producto.precio).toEqual(3.5);
+  expect(producto.categoria).toEqual("Bebidas");
+  expect(producto.cantidad).toEqual(10);
+});
+
+
 describe("Cafeteria", () => {
   it("deberia devolver 0 al no tener productos disponibles", () => {
     const cafeteria = new Cafeteria();
