@@ -33,11 +33,19 @@ class Cafeteria {
       },
       {
         id: 4,
-        nombre: "Café capuchino",
-        descripcion: "cafe con leche y chocolate",
-        precio: 10,
-        categoria: "cafe",
+        nombre: "Lomito",
+        descripcion: "carne con arroz y papas",
+        precio: 14,
+        categoria: "almuerzo",
         cantidad: 7,
+      },
+      {
+        id: 5,
+        nombre: "Pique Macho",
+        descripcion: "carne con papas,tomate, salchicha y huevos",
+        precio: 15,
+        categoria: "almuerzo",
+        cantidad: 9,
       },
     ];
   }
@@ -52,6 +60,7 @@ class Cafeteria {
       return "No hay suficiente STOCK disponible";
     }
     producto.cantidad -= cantidad;
+    if(producto.cantidad==0)this.eliminarProducto(idProducto);
     const reserva = {
       id: this.reservas.length + 1,
       idProducto,
@@ -74,6 +83,21 @@ class Cafeteria {
 
   getReservas() {
     return this.reservas;
+  }
+  getProductosPorCategoria(categoria) {
+    if (categoria=="todas") {
+      return this.productos;
+    }
+    return this.productos.filter((p) => p.categoria === categoria); 
+  }
+  getCategorias() {
+    const categorias = [];
+    this.productos.forEach((p) => {
+      if (!categorias.includes(p.categoria)) {
+        categorias.push(p.categoria);
+      }
+    });
+    return categorias;  
   }
 }
 export default Cafeteria;
