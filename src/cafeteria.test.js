@@ -8,32 +8,53 @@ describe("Cafeteria", () => {
   it("deberia devolver cantidad de productos disponibles", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.getProductos().length).toEqual(4);
+    expect(cafeteria.getProductos().length).toEqual(5);
   });
-  it("devolver la recerva del producto y su cantidad", () => {
+  it("al reservar, deberia aumentar el tamaño de la lista reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3,5);
+    cafeteria.hacerReserva(3,5,"");
     expect(cafeteria.getReservas().length).toEqual(1);
   });
-  it("Si el producto no existe devolvera: Producto no encontrado", () => {
+  it("al reservar, si el producto no existe devuelve: Producto no encontrado", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(10,2)).toBe('Producto no encontrado');
+    expect(cafeteria.hacerReserva(10,2,"")).toBe('Producto no encontrado');
   });
-  it("Si la cantidad del producto es demaciado: No hay suficiente STOCK disponible", () => {
+  it("al reservar, si la cantidad del producto es demaciada: No hay suficiente STOCK disponible", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(3,22)).toBe('No hay suficiente STOCK disponible');
+    expect(cafeteria.hacerReserva(3,22,"")).toBe('No hay suficiente STOCK disponible');
   });
   it("deberia eliminar un producto existente", () => {
   const cafeteria = new Cafeteria();
   cafeteria.cargarProductos();
   cafeteria.eliminarProducto(2);
-  expect(cafeteria.getProductos().length).toEqual(3);
+  expect(cafeteria.getProductos().length).toEqual(4);
   });
   it("deberia devolver 'Producto no encontrado' al intentar eliminar un producto sin cargar productos", () => {
     const cafeteria = new Cafeteria();
     expect(cafeteria.eliminarProducto(1)).toBe("Producto no encontrado");
+  });
+  it("deberia devolver las categorias de los productos", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getCategorias().length).toEqual(2);
+  });
+  it("deberia devolver todos los productos con categoria todas", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getProductosPorCategoria("todas").length).toEqual(5);
+  });
+  it("deberia devolver todos los productos con categoria almuerzo", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.getProductosPorCategoria("almuerzo").length).toEqual(2);
+  });
+  it("al reservar, el detalle reserva se agrega a la reserva", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3,5,"detalle nuevo");
+    expect(cafeteria.getReservas()[cafeteria.getReservas().length-1].detalle).toEqual("detalle nuevo");
   });
 });
