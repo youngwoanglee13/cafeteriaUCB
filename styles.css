@@ -1,0 +1,120 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  select {
+    appearance: none;
+   
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+    padding-right: 30px;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Estilos del menú */
+  #menu-cafeteria {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .producto {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .producto div {
+    margin-bottom: 5px;
+  }
+  
+  .producto .nombre {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .producto .descripcion {
+    color: #777;
+  }
+  
+  .producto .precio {
+    font-weight: bold;
+  }
+  
+  .producto .cantidad {
+    color: #777;
+  }
+  
+  .producto .categoria {
+    color: #333;
+    background-color: #f2f2f2;
+    padding: 5px;
+    display: inline-block;
+    border-radius: 4px;
+  }
+  
+  /* Estilos de las reservas */
+  #reservas {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .reservas li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Otros estilos personalizados */
+  /* Agrega aquí tus propios estilos adicionales según tus preferencias */
+  

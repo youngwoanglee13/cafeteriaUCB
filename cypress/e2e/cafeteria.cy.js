@@ -1,4 +1,17 @@
 describe("Cafeteria", () => {
+
+  it("Agrega un nuevo producto a la lista de productos", () => {
+      cy.visit("/");
+      cy.get("#nombre").type("Nuevo Producto");
+      cy.get("#descripcion").type("Descripción del producto");
+      cy.get("#precio").type("10");
+      cy.get("#categoria").type("Categoría del producto");
+      cy.get("#cantidad").type("5");
+  
+      cy.get("#agregarProductoForm").submit();
+      cy.get("#menu-cafeteria").should("contain", "Nuevo Producto");
+  });
+
   it("Muestra todos los productos disponibles en el menu", () => {
     cy.visit("/");
     cy.get('#menu-cafeteria').children('li').should('have.length', 5);
