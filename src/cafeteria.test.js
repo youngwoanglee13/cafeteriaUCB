@@ -1,5 +1,11 @@
 import Cafeteria from "./cafeteria.js";
 
+it("debería agregar un nuevo producto al array de productos", () => {
+  const cafeteria = new Cafeteria();
+  cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 10);
+  expect(cafeteria.getProductos().length).toEqual(1);
+});
+
 describe("Cafeteria", () => {
   it("deberia devolver 0 al no tener productos disponibles", () => {
     const cafeteria = new Cafeteria();

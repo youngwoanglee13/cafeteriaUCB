@@ -2,6 +2,7 @@ class Cafeteria {
   productos = [];
   reservas = [];
 
+  
   getProductos() {
     return this.productos;
   }
