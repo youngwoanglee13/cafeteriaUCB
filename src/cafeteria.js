@@ -60,6 +60,7 @@ class Cafeteria {
       return "No hay suficiente STOCK disponible";
     }
     producto.cantidad -= cantidad;
+    if(producto.cantidad==0)this.eliminarProducto(idProducto);
     const reserva = {
       id: this.reservas.length + 1,
       idProducto,
