@@ -10,21 +10,21 @@ describe("Cafeteria", () => {
     cafeteria.cargarProductos();
     expect(cafeteria.getProductos().length).toEqual(5);
   });
-  it("devolver la recerva del producto y su cantidad", () => {
+  it("al reservar, deberia aumentar el tamaño de la lista reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3,5);
+    cafeteria.hacerReserva(3,5,"");
     expect(cafeteria.getReservas().length).toEqual(1);
   });
-  it("Si el producto no existe devolvera: Producto no encontrado", () => {
+  it("al reservar, si el producto no existe devuelve: Producto no encontrado", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(10,2)).toBe('Producto no encontrado');
+    expect(cafeteria.hacerReserva(10,2,"")).toBe('Producto no encontrado');
   });
-  it("Si la cantidad del producto es demaciado: No hay suficiente STOCK disponible", () => {
+  it("al reservar, si la cantidad del producto es demaciada: No hay suficiente STOCK disponible", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(3,22)).toBe('No hay suficiente STOCK disponible');
+    expect(cafeteria.hacerReserva(3,22,"")).toBe('No hay suficiente STOCK disponible');
   });
   it("deberia eliminar un producto existente", () => {
   const cafeteria = new Cafeteria();
@@ -51,5 +51,10 @@ describe("Cafeteria", () => {
     cafeteria.cargarProductos();
     expect(cafeteria.getProductosPorCategoria("almuerzo").length).toEqual(2);
   });
-  
+  it("al reservar, el detalle reserva se agrega a la reserva", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3,5,"detalle nuevo");
+    expect(cafeteria.getReservas()[cafeteria.getReservas().length-1].detalle).toEqual("detalle nuevo");
+  });
 });
