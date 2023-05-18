@@ -58,4 +58,3 @@ describe("Cafeteria", () => {
     expect(cafeteria.getReservas()[cafeteria.getReservas().length-1].detalle).toEqual("detalle nuevo");
   });
 });
-

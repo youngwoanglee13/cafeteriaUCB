@@ -16,3 +16,4 @@ describe("Cafeteria", () => {
     cy.get('ul#menu-cafeteria').should('not.contain', 'Café moka');
   });
 });
+
