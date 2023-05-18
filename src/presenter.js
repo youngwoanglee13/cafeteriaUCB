@@ -57,11 +57,11 @@ function actualizarMenu() {
 const form = document.getElementById("reservaForm");
 const cantidad = form.cantidad;
 const reservasList = document.getElementById("reservas");
-
+const reservaDetalle = document.getElementById("iddetalle");
 form.addEventListener("submit", (event) => {
   const idProducto = parseInt(form.producto.value);
   event.preventDefault();
-  const resultado = cafeteria.hacerReserva(idProducto, cantidad.valueAsNumber);
+  const resultado = cafeteria.hacerReserva(idProducto, cantidad.valueAsNumber, reservaDetalle.value);
   alert(resultado);
   if(resultado.includes("Reserva creada:")){
     const li = document.createElement("li");
