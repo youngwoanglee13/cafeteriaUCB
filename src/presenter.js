@@ -3,22 +3,34 @@ let cafeteria = new Cafeteria();
 cafeteria.cargarProductos();
 
 const lista = document.querySelector("#menu-cafeteria");
-let productos;
-actualizarMenu();
+let productos=cafeteria.getProductos();
+
 //funcion imprimir productos:
 const selectProducto = document.getElementById("producto");
-const listaproductos = cafeteria.getProductos();
-const listaReservas = cafeteria.getReservas();
+const selectCategoria = document.getElementById("idcategoria");
+actualizarMenu();
+cargarListaReserva();
 
-for (const producto of listaproductos) {
-  const option = document.createElement("option");
-  option.value = producto.id;
-  option.text = producto.nombre;
-  selectProducto.appendChild(option);
+function cargarListaReserva(){ 
+  selectProducto.innerHTML = "";
+  for (const producto of productos) {
+    const option = document.createElement("option");
+    option.value = producto.id; option.text = producto.nombre; 
+    selectProducto.appendChild(option);
+  }
 }
 
+for (const producto of cafeteria.getCategorias()) {
+  const option = document.createElement("option");
+  option.text=option.value = producto; selectCategoria.appendChild(option);
+} 
+selectCategoria.addEventListener("change", function() {
+  productos = cafeteria.getProductosPorCategoria(this.value);
+  actualizarMenu();
+  cargarListaReserva();
+});
 function actualizarMenu() {
-  productos = cafeteria.getProductos();
+  lista.innerHTML = "";
   for (let i = 0; i < productos.length; i++) {
     const li = document.createElement("li");
     li.className = "producto";
@@ -43,18 +55,21 @@ function actualizarMenu() {
 }
 
 const form = document.getElementById("reservaForm");
-const idProducto = parseInt(form.producto.value);
-const cantidad = parseInt(form.cantidad.value);
+const cantidad = form.cantidad;
 const reservasList = document.getElementById("reservas");
-const li = document.createElement("li");
 
 form.addEventListener("submit", (event) => {
+  const idProducto = parseInt(form.producto.value);
   event.preventDefault();
-  const resultado = cafeteria.hacerReserva(idProducto, cantidad);
+  const resultado = cafeteria.hacerReserva(idProducto, cantidad.valueAsNumber);
   alert(resultado);
-  li.textContent = resultado;
-  reservasList.appendChild(li);
-  form.reset();
+  if(resultado.includes("Reserva creada:")){
+    const li = document.createElement("li");
+    li.textContent = resultado;
+    reservasList.appendChild(li);
+    form.reset();
+    actualizarMenu();
+  }
 });
 
 // for (const reserva of listaReservas) {
