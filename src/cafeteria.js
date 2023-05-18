@@ -72,13 +72,11 @@ class Cafeteria {
     return "Reserva creada:" + reserva.cantidad + ' x ' + producto.nombre +" : "+ detalle;
   }
   eliminarProducto(idProducto) {
-    const index = this.productos.findIndex((p) => p.id === idProducto);
-    if (index === -1) {
-      console.log("Producto no encontrado");
+    const productoIndex = this.productos.findIndex((p) => p.id === idProducto);
+    if (productoIndex === -1) {
       return "Producto no encontrado";
     }
-    this.productos.splice(index, 1);
-    console.log("Producto eliminado:", idProducto);
+    this.productos.splice(productoIndex, 1);
     return "Producto eliminado: " + idProducto;
   }
 
