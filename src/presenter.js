@@ -5,7 +5,6 @@ cafeteria.cargarProductos();
 const lista = document.querySelector("#menu-cafeteria");
 let productos=cafeteria.getProductos();
 
-//funcion imprimir productos:
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.getElementById("idcategoria");
 actualizarMenu();
@@ -71,8 +70,3 @@ form.addEventListener("submit", (event) => {
     actualizarMenu();
   }
 });
-
-// for (const reserva of listaReservas) {
-//   li.textContent = `Reserva: ${reserva.cantidad} x ${reserva.idProducto}`;
-//   reservasList.appendChild(li);
-// }
