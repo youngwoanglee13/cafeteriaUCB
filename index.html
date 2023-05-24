@@ -34,6 +34,26 @@
   <h1>Reservas realizadas</h1>
   <ul id="reservas"></ul>
 
+  <h1>Agregar producto</h1>
+  <form id="agregarProductoForm">
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre" required>
+  <br>
+  <label for="descripcion">Descripción:</label>
+  <input type="text" id="descripcion" name="descripcion" required>
+  <br>
+  <label for="precio">Precio:</label>
+  <input type="number" id="precio" name="precio" min="0" required>
+  <br>
+  <label for="categoria">Categoría:</label>
+  <input type="text" id="categoria" name="categoria" required>
+  <br>
+  <label for="cantidad">Cantidad:</label>
+  <input type="number" id="idCantidad" name="cantidad" min="1" max="100" required>
+  <br>
+  <button type="submitProduct">Agregar</button>
+</form>
+
   <script type="module" src="./src/presenter.js"></script>
 </body>
 

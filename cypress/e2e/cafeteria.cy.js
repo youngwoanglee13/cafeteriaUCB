@@ -30,4 +30,18 @@ describe("Cafeteria", () => {
     cy.get('button[type="submit"]').click();
     cy.get('ul#reservas').children('li').should('have.length', 1);
   });
+
+
+  it("Agrega un nuevo producto a la lista de productos", () => {
+    cy.visit("/");
+    cy.get("#nombre").type("Nuevo Producto");
+    cy.get("#descripcion").type("Descripción del producto");
+    cy.get("#precio").type("10");
+    cy.get("#categoria").type("Categoría del producto");
+    cy.get("#idCantidad").type("5");
+
+    cy.get("#agregarProductoForm").submit();
+    cy.get("#menu-cafeteria").should("contain", "Nuevo Producto");
+  });
+  
 });
