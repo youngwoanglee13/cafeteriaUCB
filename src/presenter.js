@@ -3,7 +3,7 @@ let cafeteria = new Cafeteria();
 cafeteria.cargarProductos();
 
 const lista = document.querySelector("#menu-cafeteria");
-let productos=cafeteria.getProductos();
+let productos = cafeteria.getProductos();
 
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.getElementById("idcategoria");
@@ -28,6 +28,7 @@ selectCategoria.addEventListener("change", function() {
   actualizarMenu();
   cargarListaReserva();
 });
+
 function actualizarMenu() {
   lista.innerHTML = "";
   for (let i = 0; i < productos.length; i++) {
@@ -69,4 +70,30 @@ form.addEventListener("submit", (event) => {
     form.reset();
     actualizarMenu();
   }
+
 });
+
+
+const agregarProductoForm = document.getElementById("agregarProductoForm");
+  agregarProductoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("fsdfv");
+const nombre = agregarProductoForm.nombre.value;
+const descripcion = agregarProductoForm.descripcion.value;
+const precio = parseFloat(agregarProductoForm.precio.value);
+const categoria = agregarProductoForm.categoria.value;
+const cantidad = parseInt(agregarProductoForm.cantidad.value);
+console.log(nombre, descripcion, precio, categoria, cantidad);
+cafeteria.agregarProducto(nombre, descripcion, precio, categoria, cantidad);
+productos = cafeteria.getProductos();
+getProductos();
+
+});
+
+function getProductos ()
+{
+  this.productos = cafeteria.getProductos();
+  actualizarMenu();
+
+}
+
