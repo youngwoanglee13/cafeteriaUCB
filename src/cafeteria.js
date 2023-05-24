@@ -66,26 +66,28 @@ class Cafeteria {
     ];
   }
   hacerReserva(idProducto, cantidad, detalle) {
+    
     const producto = this.productos.find((p) => p.id === idProducto);
     if (!producto) {
       console.log("Producto no encontrado");
-      return "Producto no encontrado";
+      return ["Producto no encontrado"];
     }
     if (producto.reservable < cantidad) {
       console.log("No hay suficiente STOCK disponible");
-      return "No hay suficiente STOCK disponible";
+      return ["No hay suficiente STOCK disponible"];
     }
     producto.reservable -= cantidad;//
     //if(producto.cantidad==0)this.eliminarProducto(idProducto); de momento no es util
     const reserva = {
       id: Math.floor(Math.random() * 100000),
       idProducto,
+      producto: producto.nombre,
       cantidad,
       detalle,
     };
     this.reservas.push(reserva);
     console.log("Reserva creada:", reserva);
-    return "Reserva creada:" + reserva.cantidad + ' x ' + producto.nombre +" : "+ detalle;
+    return ["Reserva creada", reserva.id, reserva.cantidad + ' x ' + reserva.producto +" : "+ detalle];
   }
   eliminarProducto(idProducto) {
     const productoIndex = this.productos.findIndex((p) => p.id === idProducto);
@@ -114,6 +116,13 @@ class Cafeteria {
       }
     });
     return categorias;  
+  }
+  confirmarReserva(idReserva) {
+    const reserva = this.reservas.find((r) => r.id === idReserva);
+    if (reserva) {
+      const indexProducto = this.productos.findIndex((p) => p.id === reserva.idProducto);
+      this.productos[indexProducto].stock -= reserva.cantidad;
+    }
   }
 }
 export default Cafeteria;

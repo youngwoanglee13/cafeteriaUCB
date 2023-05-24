@@ -22,12 +22,12 @@ describe("Cafeteria", () => {
   it("al reservar, si el producto no existe devuelve: Producto no encontrado", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(10,2,"")).toBe('Producto no encontrado');
+    expect(cafeteria.hacerReserva(10,2,"")[0]).toBe('Producto no encontrado');
   });
   it("al reservar, si la cantidad del producto es demaciada: No hay suficiente STOCK disponible", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(3,22,"")).toBe('No hay suficiente STOCK disponible');
+    expect(cafeteria.hacerReserva(3,22,"")[0]).toBe('No hay suficiente STOCK disponible');
   });
   it("deberia eliminar un producto existente", () => {
   const cafeteria = new Cafeteria();
@@ -75,5 +75,17 @@ describe("Cafeteria", () => {
     expect(producto.stock).toEqual(10);
     expect(producto.reservable).toEqual(10);
   });
-
+  it("si no exite la reserva el stock se mantiene", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 1, 1);
+    cafeteria.confirmarReserva(123456789);
+    expect(cafeteria.getProductos("todas")[0].stock).toEqual(1);
+  });
+  it("debería bajar el stock al momento de confirmar una reserva", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 1, 1);
+    cafeteria.hacerReserva(cafeteria.getProductos("todas")[0].id,1,"sin azucar");
+    cafeteria.confirmarReserva(cafeteria.getReservas()[0].id);
+    expect(cafeteria.getProductos("todas")[0].stock).toEqual(0);
+  });
 });
