@@ -13,25 +13,17 @@ describe("Cafeteria", () => {
     cy.get('select#productoPorReservar').select('Lomito');
     cy.get('input#cantidad').type('1');
     cy.get('button[type="submit"]').click();
-    cy.get('ul#reservas').children('li').should('have.length', 1);
+    cy.get("#reservas li").contains('1 x Lomito :');
   });
-  // it("En modo usuario cuando un producto llega a disponibilidad 0 se elimina del menu", () => {
-  //   cy.visit("/");
-  //   cy.get('select#producto').select('Café moka');
-  //   cy.get('input#cantidad').type('1');
-  //   cy.get('button[type="submit"]').click();
-  //   cy.get('ul#menu-cafeteria').should('not.contain', 'Café moka');
-  // });
   it("Hacer una reserva con detalle", () => {
     cy.visit("/");
     cy.get('select#productoPorReservar').select('Pique Macho');
     cy.get('input#cantidad').type('1');
-    cy.get('input#iddetalle').type('Sin lechugas');
+    cy.get('input#iddetalle').type('sin tomate');
     cy.get('button[type="submit"]').click();
-    cy.get('ul#reservas').children('li').should('have.length', 1);
+    cy.get("#reservas li").contains('1 x Pique Macho :sin tomate');
+   
   });
-
-
   it("Agrega un nuevo producto a la lista de productos", () => {
     cy.visit("/");
     cy.get("#botonAdministrador").click();
@@ -40,9 +32,17 @@ describe("Cafeteria", () => {
     cy.get("#precio").type("10");
     cy.get("#categoria").type("Categoría del producto");
     cy.get("#idCantidad").type("5");
-
     cy.get("#agregarProductoForm").submit();
     cy.get("#menu-cafeteria").should("contain", "Nuevo Producto");
   });
-  
+  it("El stock baja despues de confirmar una reserva", () => {
+    cy.visit("/");
+    cy.get('select#productoPorReservar').select('Lomito');
+    cy.get('input#cantidad').type('1');
+    cy.get('input#iddetalle').type('Sin zanahorias');
+    cy.get('button[type="submit"]').click();
+    cy.get("#botonAdministrador").click();
+    cy.get('ul#reservas li button').click();
+    cy.get("#menu-cafeteria #4 .admincafe").should("have.text", "en stock  :6");
+});
 });

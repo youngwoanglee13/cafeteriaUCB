@@ -12,10 +12,9 @@ const botonUsuario = document.querySelector("#botonUsuario");
 const cantidad = Reservarform.cantidad;
 const reservaDetalle = document.getElementById("iddetalle");
 const idProducto = Reservarform.producto;
-  
-actualizarMenu("todas");//aqui
+actualizarMenu("todas");
 
-function actualizarMenu(categoria) {//aqui
+function actualizarMenu(categoria) {
   let listaProductos = cafeteria.getProductos(categoria);
   lista.innerHTML = "";
   for (let i = 0; i < listaProductos.length; i++) {
@@ -33,6 +32,7 @@ function actualizarMenu(categoria) {//aqui
   }
   actualizarCategorias(categoria);
   actualizarComboReservar(categoria);
+  actualizarReservas();
 }
 
 function actualizarComboReservar(categoria){ 
@@ -60,6 +60,25 @@ function cambiarPermisos(tipoDeUsuario,display){
   });
 }
 
+function actualizarReservas(){
+  reservasList.innerHTML = "";
+  for (const reserva of cafeteria.getReservas()) {
+    const li = document.createElement("li");
+    li.textContent = reserva.cantidad + " x " +reserva.producto + " :" + reserva.detalle;
+    const confirmar = document.createElement("button"); 
+    confirmar.textContent = "Confirmar"; confirmar.id = reserva.id; confirmar.className = "admincafe"; confirmar.style.display = "none";
+    confirmar.addEventListener("click", function() { confirmarReserva(parseInt(confirmar.id));});
+    li.appendChild(confirmar);
+    reservasList.appendChild(li);
+  }
+}
+
+function confirmarReserva(id){
+  cafeteria.confirmarReserva(id);
+  actualizarMenu("todas");
+  cambiarPermisos("admincafe","block");
+}
+
 categoriaSeleccionada.addEventListener("change", function() {
   actualizarMenu(this.value);
 });
@@ -67,14 +86,10 @@ categoriaSeleccionada.addEventListener("change", function() {
 Reservarform.addEventListener("submit", (event) => {
   event.preventDefault();  
   const resultado = cafeteria.hacerReserva(parseInt(idProducto.value), cantidad.valueAsNumber, reservaDetalle.value);
-  alert(resultado);
-  if(resultado.includes("Reserva creada:")){
-    const li = document.createElement("li");
-    li.textContent = resultado;
-    reservasList.appendChild(li);
-    Reservarform.reset();
-    actualizarMenu("todas");
-  }
+  alert(resultado[0]);
+  actualizarReservas();
+  Reservarform.reset();
+  actualizarMenu("todas");
 });
 
 agregarProductoForm.addEventListener("submit", (event) => {
