@@ -2,21 +2,15 @@ class Cafeteria {
   productos = [];
   reservas = [];
 
-  getProductos() {
-    return this.productos;
-  }
-
-
-  agregarProducto(nombre, descripcion, precio, categoria, cantidad) {
-    this.ultimoId++;
-    
+  agregarProducto(nombre, descripcion, precio, categoria, stock , reservable) {
     const producto = {
-      id: this.ultimoId,
+      id: Math.floor(Math.random() * 100000),
       nombre,
       descripcion,
       precio,
       categoria,
-      cantidad
+      stock,
+      reservable,
     };
     this.productos.push(producto);
     return producto;
@@ -30,7 +24,8 @@ class Cafeteria {
         descripcion: "cafe con chocolate",
         precio: 10,
         categoria: "cafe",
-        cantidad: 1,
+        stock: 1,
+        reservable: 1,
       },
       {
         id: 2,
@@ -38,7 +33,8 @@ class Cafeteria {
         descripcion: "cafe con agua",
         precio: 10,
         categoria: "cafe",
-        cantidad: 3,
+        stock: 3,
+        reservable: 3,
       },
       {
         id: 3,
@@ -46,7 +42,8 @@ class Cafeteria {
         descripcion: "cafe con leche",
         precio: 10,
         categoria: "cafe",
-        cantidad: 5,
+        stock: 5,
+        reservable: 5,
       },
       {
         id: 4,
@@ -54,7 +51,8 @@ class Cafeteria {
         descripcion: "carne con arroz y papas",
         precio: 14,
         categoria: "almuerzo",
-        cantidad: 7,
+        stock: 7,
+        reservable: 7,
       },
       {
         id: 5,
@@ -62,7 +60,8 @@ class Cafeteria {
         descripcion: "carne con papas,tomate, salchicha y huevos",
         precio: 15,
         categoria: "almuerzo",
-        cantidad: 9,
+        stock: 9,
+        reservable: 9,
       },
     ];
   }
@@ -72,14 +71,14 @@ class Cafeteria {
       console.log("Producto no encontrado");
       return "Producto no encontrado";
     }
-    if (producto.cantidad < cantidad) {
+    if (producto.reservable < cantidad) {
       console.log("No hay suficiente STOCK disponible");
       return "No hay suficiente STOCK disponible";
     }
-    producto.cantidad -= cantidad;
-    if(producto.cantidad==0)this.eliminarProducto(idProducto);
+    producto.reservable -= cantidad;//
+    //if(producto.cantidad==0)this.eliminarProducto(idProducto); de momento no es util
     const reserva = {
-      id: this.reservas.length + 1,
+      id: Math.floor(Math.random() * 100000),
       idProducto,
       cantidad,
       detalle,
@@ -100,7 +99,7 @@ class Cafeteria {
   getReservas() {
     return this.reservas;
   }
-  getProductosPorCategoria(categoria) {
+  getProductos(categoria) {
     if (categoria=="todas") {
       return this.productos;
     }
@@ -108,6 +107,7 @@ class Cafeteria {
   }
   getCategorias() {
     const categorias = [];
+    categorias.push("todas");
     this.productos.forEach((p) => {
       if (!categorias.includes(p.categoria)) {
         categorias.push(p.categoria);

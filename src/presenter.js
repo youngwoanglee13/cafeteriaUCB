@@ -1,99 +1,99 @@
 import Cafeteria from "./cafeteria";
-let cafeteria = new Cafeteria();
-cafeteria.cargarProductos();
+let cafeteria = new Cafeteria(); cafeteria.cargarProductos();
 
-const lista = document.querySelector("#menu-cafeteria");
-let productos = cafeteria.getProductos();
+const lista = document.querySelector("#menu-cafeteria");//aqui
+const reservasList = document.getElementById("reservas");
+const productoPorReservar = document.getElementById("productoPorReservar");
+const categoriaSeleccionada = document.getElementById("idcategoria");
+const agregarProductoForm = document.getElementById("agregarProductoForm");
+const Reservarform = document.getElementById("reservaForm");
+const botonAdministrador = document.querySelector("#botonAdministrador");
+const botonUsuario = document.querySelector("#botonUsuario");
+const cantidad = Reservarform.cantidad;
+const reservaDetalle = document.getElementById("iddetalle");
+const idProducto = Reservarform.producto;
+  
+actualizarMenu("todas");//aqui
 
-const selectProducto = document.getElementById("producto");
-const selectCategoria = document.getElementById("idcategoria");
-actualizarMenu();
-cargarListaReserva();
-
-function cargarListaReserva(){ 
-  selectProducto.innerHTML = "";
-  for (const producto of productos) {
-    const option = document.createElement("option");
-    option.value = producto.id; option.text = producto.nombre; 
-    selectProducto.appendChild(option);
-  }
-}
-
-for (const producto of cafeteria.getCategorias()) {
-  const option = document.createElement("option");
-  option.text=option.value = producto; selectCategoria.appendChild(option);
-} 
-selectCategoria.addEventListener("change", function() {
-  productos = cafeteria.getProductosPorCategoria(this.value);
-  actualizarMenu();
-  cargarListaReserva();
-});
-
-function actualizarMenu() {
+function actualizarMenu(categoria) {//aqui
+  let listaProductos = cafeteria.getProductos(categoria);
   lista.innerHTML = "";
-  for (let i = 0; i < productos.length; i++) {
-    const li = document.createElement("li");
-    li.className = "producto";
-    li.id = productos[i].id;
-    const nombre = document.createElement("div");
-    nombre.textContent = productos[i].nombre;
-    const descripcion = document.createElement("div");
-    descripcion.textContent = productos[i].descripcion;
-    const precio = document.createElement("div");
-    precio.textContent = productos[i].precio + " Bs.";
-    const cantidad = document.createElement("div");
-    cantidad.textContent = productos[i].cantidad + " en stock";
-    const categoria = document.createElement("div");
-    categoria.textContent = "#" + productos[i].categoria;
-    li.appendChild(nombre);
-    li.appendChild(descripcion);
-    li.appendChild(precio);
-    li.appendChild(cantidad);
-    li.appendChild(categoria);
+  for (let i = 0; i < listaProductos.length; i++) {
+    const li = document.createElement("li"); li.className = "producto"; li.id = listaProductos[i].id;
+    const nombre = document.createElement("div"); nombre.textContent = listaProductos[i].nombre;
+    const descripcion = document.createElement("div"); descripcion.textContent = listaProductos[i].descripcion;
+    const precio = document.createElement("div"); precio.textContent = listaProductos[i].precio + " Bs.";
+    const reservable = document.createElement("div"); reservable.textContent = "disponible:" + listaProductos[i].reservable;
+    const categoria = document.createElement("div"); categoria.textContent = "#" + listaProductos[i].categoria;
+    const stock = document.createElement("div"); stock.className = "admincafe";
+    stock.style.display = "none"; stock.textContent = "en stock  :"+listaProductos[i].stock;
+    li.appendChild(nombre); li.appendChild(descripcion); li.appendChild(precio);
+    li.appendChild(reservable); li.appendChild(stock); li.appendChild(categoria);
     lista.appendChild(li);
   }
+  actualizarCategorias(categoria);
+  actualizarComboReservar(categoria);
 }
 
-const form = document.getElementById("reservaForm");
-const cantidad = form.cantidad;
-const reservasList = document.getElementById("reservas");
-const reservaDetalle = document.getElementById("iddetalle");
-form.addEventListener("submit", (event) => {
-  const idProducto = parseInt(form.producto.value);
-  event.preventDefault();
-  const resultado = cafeteria.hacerReserva(idProducto, cantidad.valueAsNumber, reservaDetalle.value);
+function actualizarComboReservar(categoria){ 
+  productoPorReservar.innerHTML = "";
+  for (const producto of cafeteria.getProductos(categoria)) {
+    const option = document.createElement("option");
+    option.value = producto.id; option.text = producto.nombre; 
+    productoPorReservar.appendChild(option);
+  }
+}
+
+function actualizarCategorias(categoria){
+  categoriaSeleccionada.innerHTML = "";
+  for (const producto of cafeteria.getCategorias()) {
+    const option = document.createElement("option");
+    option.text=option.value = producto; categoriaSeleccionada.appendChild(option);
+  }
+  categoriaSeleccionada.value = categoria; 
+}
+
+function cambiarPermisos(tipoDeUsuario,display){
+  var elementosUsuario = document.querySelectorAll("."+tipoDeUsuario);
+  elementosUsuario.forEach(function(elemento) {
+  elemento.style.display = display;
+  });
+}
+
+categoriaSeleccionada.addEventListener("change", function() {
+  actualizarMenu(this.value);
+});
+
+Reservarform.addEventListener("submit", (event) => {
+  event.preventDefault();  
+  const resultado = cafeteria.hacerReserva(parseInt(idProducto.value), cantidad.valueAsNumber, reservaDetalle.value);
   alert(resultado);
   if(resultado.includes("Reserva creada:")){
     const li = document.createElement("li");
     li.textContent = resultado;
     reservasList.appendChild(li);
-    form.reset();
-    actualizarMenu();
+    Reservarform.reset();
+    actualizarMenu("todas");
   }
-
 });
 
-
-const agregarProductoForm = document.getElementById("agregarProductoForm");
-  agregarProductoForm.addEventListener("submit", (event) => {
+agregarProductoForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log("fsdfv");
-const nombre = agregarProductoForm.nombre.value;
-const descripcion = agregarProductoForm.descripcion.value;
-const precio = parseFloat(agregarProductoForm.precio.value);
-const categoria = agregarProductoForm.categoria.value;
-const cantidad = parseInt(agregarProductoForm.cantidad.value);
-console.log(nombre, descripcion, precio, categoria, cantidad);
-cafeteria.agregarProducto(nombre, descripcion, precio, categoria, cantidad);
-productos = cafeteria.getProductos();
-getProductos();
-
+  const nombre = agregarProductoForm.nombre.value;
+  const descripcion = agregarProductoForm.descripcion.value;
+  const precio = parseFloat(agregarProductoForm.precio.value);
+  const categoria = agregarProductoForm.categoria.value;
+  const stock = parseInt(agregarProductoForm.cantidad.value);
+  cafeteria.agregarProducto(nombre, descripcion, precio, categoria, stock, stock);
+  actualizarMenu("todas");
 });
 
-function getProductos ()
-{
-  this.productos = cafeteria.getProductos();
-  actualizarMenu();
-
-}
+botonAdministrador.addEventListener("click", function() {
+  cambiarPermisos("admincafe","block");
+  cambiarPermisos("usuariocafe","none");
+});
+botonUsuario.addEventListener("click", function() {
+  cambiarPermisos("admincafe","none");
+  cambiarPermisos("usuariocafe","block");
+});
 
