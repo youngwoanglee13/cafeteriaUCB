@@ -67,6 +67,15 @@ describe("Cafeteria", () => {
     cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 10);
     expect(cafeteria.getProductos().length).toEqual(1);
   });
-
+  
+  it("debería devolver el producto agregado correctamente", () => {
+    const cafeteria = new Cafeteria();
+    const producto = cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 10);
+    expect(producto.nombre).toEqual("Café Latte");
+    expect(producto.descripcion).toEqual("Delicioso café con leche");
+    expect(producto.precio).toEqual(3.5);
+    expect(producto.categoria).toEqual("Bebidas");
+    expect(producto.cantidad).toEqual(10);
+  });
 
 });
