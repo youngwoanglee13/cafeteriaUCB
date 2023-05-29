@@ -1,6 +1,8 @@
 class Cafeteria {
-  productos = [];
-  reservas = [];
+  constructor(){
+    this.productos = [];
+    this.reservas = [];
+  }
 
   agregarProducto(nombre, descripcion, precio, categoria, stock , reservable) {
     const producto = {
@@ -14,6 +16,27 @@ class Cafeteria {
     };
     this.productos.push(producto);
     return producto;
+  }
+
+  editarProducto(id, new_nombre, new_descripcion, new_precio, new_categoria){
+    const index = this.productos.findIndex(producto => producto.id === id);
+    if (index !== -1){
+      this.productos[index].nombre = new_nombre;
+      this.productos[index].descripcion = new_descripcion;
+      this.productos[index].precio = new_precio;
+      this.productos[index].categoria = new_categoria;
+    }else{
+      return "No existe el producto"
+    }
+  }
+
+  eliminarProducto(idProducto) {
+    const productoIndex = this.productos.findIndex((p) => p.id === idProducto);
+    if (productoIndex === -1) {
+      return "Producto no encontrado";
+    }
+    this.productos.splice(productoIndex, 1);
+    return "Producto eliminado: " + idProducto;
   }
 
   cargarProductos() {
@@ -77,7 +100,6 @@ class Cafeteria {
       return ["No hay suficiente STOCK disponible"];
     }
     producto.reservable -= cantidad;//
-    //if(producto.cantidad==0)this.eliminarProducto(idProducto); de momento no es util
     const reserva = {
       id: Math.floor(Math.random() * 100000),
       idProducto,
@@ -88,14 +110,6 @@ class Cafeteria {
     this.reservas.push(reserva);
     console.log("Reserva creada:", reserva);
     return ["Reserva creada", reserva.id, reserva.cantidad + ' x ' + reserva.producto +" : "+ detalle];
-  }
-  eliminarProducto(idProducto) {
-    const productoIndex = this.productos.findIndex((p) => p.id === idProducto);
-    if (productoIndex === -1) {
-      return "Producto no encontrado";
-    }
-    this.productos.splice(productoIndex, 1);
-    return "Producto eliminado: " + idProducto;
   }
 
   getReservas() {

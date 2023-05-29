@@ -112,3 +112,83 @@ botonUsuario.addEventListener("click", function() {
   cambiarPermisos("usuariocafe","block");
 });
 
+// Función para llenar los selectores con los productos
+let productos = cafeteria.getProductos("todas");
+
+function llenarSelectores() {
+  var selectEdit = document.getElementById("select-edit");
+  var selectDelete = document.getElementById("select-delete");
+
+  // Limpiar selectores
+  selectEdit.innerHTML = "";
+  selectDelete.innerHTML = "";
+
+  // Llenar selectores con opciones de productos
+  productos.forEach(function(producto) {
+      var option = document.createElement("option");
+      option.value = producto.id;
+      option.text = producto.nombre;
+
+      selectEdit.appendChild(option.cloneNode(true));
+      selectDelete.appendChild(option);
+  });
+}
+
+// Función para editar un producto seleccionado
+window.editarProductoHtml = function() {
+  var selectEdit = document.getElementById("select-edit");
+  var productId = parseInt(selectEdit.value);
+
+  // Buscar el producto seleccionado en la lista
+  var producto = productos.find(function(item) {
+      return item.id === productId;
+  });
+
+  if (producto) {
+      // Mostrar un formulario de edición con los datos del producto
+      var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:", producto.nombre);
+      var nuevoDescripcion = prompt("Ingrese la nueva descripcion del producto:", producto.descripcion);
+      var nuevoPrecio = parseInt(prompt("Ingrese el nuevo precio del producto:", producto.precio));
+      var nuevoCategoria = prompt("Ingrese la nueva categoria del producto:", producto.categoria);
+
+      if (nuevoNombre && !isNaN(nuevoPrecio)) {
+          // Actualizar los datos del producto
+          // producto.nombre = nuevoNombre;
+          // producto.precio = nuevoPrecio;
+          cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria)
+          // producto = cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria)
+          alert("El producto se ha editado correctamente.");
+          llenarSelectores();
+      } else {
+          alert("Los datos ingresados no son válidos.");
+      }
+  } else {
+      alert("No se ha seleccionado ningún producto para editar.");
+  }
+  actualizarMenu("todas");
+}
+
+// Función para eliminar un producto seleccionado
+window.eliminarProductoHtml = function() {
+  var selectDelete = document.getElementById("select-delete");
+  var productId = parseInt(selectDelete.value);
+
+  // Buscar el producto seleccionado en la lista
+  var productoIndex = productos.findIndex(function(item) {
+      return item.id === productId;
+  });
+
+  respuesta = cafeteria.eliminarProducto(productId);
+  if (productoIndex !== -1) {
+      // Eliminar el producto de la lista
+      // productos.splice(productoIndex, 1);
+      alert(respuesta);
+      llenarSelectores();
+  } else {
+      alert("No se ha seleccionado ningún producto para eliminar.");
+  }
+  actualizarMenu("todas");
+}
+
+// Llenar los selectores al cargar la página
+llenarSelectores();
