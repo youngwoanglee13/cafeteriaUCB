@@ -88,6 +88,12 @@ describe("Cafeteria", () => {
     cafeteria.confirmarReserva(cafeteria.getReservas()[0].id);
     expect(cafeteria.getProductos("todas")[0].stock).toEqual(0);
   });
+  it("Solo se edita los productos existentes", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    expect(cafeteria.editarProducto(100, "Café new", "new cafe", 15, "cafe new")).toBe("No existe el producto");
+  });
+
   it("Editar un producto del menu productos", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
