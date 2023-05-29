@@ -88,4 +88,10 @@ describe("Cafeteria", () => {
     cafeteria.confirmarReserva(cafeteria.getReservas()[0].id);
     expect(cafeteria.getProductos("todas")[0].stock).toEqual(0);
   });
+  it("Editar un producto del menu productos", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.editarProducto(2, "Café super americano new", "new cafe con agua potable", 15, "cafe new");
+    expect(cafeteria.getProductos("cafe new")[0].nombre).toBe("Café super americano new");
+  });
 });
