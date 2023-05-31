@@ -37,7 +37,7 @@
         <label for="iddetalle">Detalle:</label>
         <input type="text" id="iddetalle" name="detalle" />
         <br />
-        <button type="submit">Reservar</button>
+        <button id="botonReservar" type="submit">Reservar</button>
       </form>
     </div>
     <div id="reservasRealizadas">
@@ -45,7 +45,21 @@
       <h1>Mis Reservas</h1>
       <ul id="reservas"></ul>
     </div>
+    
+    
+    <form id="editarReservaForm" class="usuariocafe">
+      <hr />
+      <h1>Editar Reserva</h1>
+      <label for="select-edit-reserva">Seleccionar Reserva:</label>
+      <select id="select-edit-reserva"></select>
+      <label for="nueva-cantidad">Nueva Cantidad:</label>
+      <input type="number" id="nueva-cantidad" required />
+      <label for="nuevo-detalle">Nuevo Detalle:</label>
+      <input type="text" id="nuevo-detalle" />
+      <button type="submit">Editar Reserva</button>
+    </form>
 
+    
     <div class="admincafe" style="display: none">
       <hr />
       <h1>Agregar producto</h1>
@@ -78,14 +92,15 @@
       <h1>Editar un producto:</h1>
       <label for="select-edit">Selecciona un producto para editar:</label>
       <select id="select-edit"></select>
-      <button onclick="editarProductoHtml()">Editar Producto</button>
+      <button id="botonEditarProducto" onclick="editarProductoHtml()">Editar Producto</button>
       <br /><br />
 
       <h1>Eliminar un producto:</h1>
       <label for="select-delete">Selecciona un producto para eliminar:</label>
       <select id="select-delete"></select>
-      <button onclick="eliminarProductoHtml()">Eliminar Producto</button>
+      <button id="botonEliminarProducto" onclick="eliminarProductoHtml()">Eliminar Producto</button>
       <br /><br />
+
     </div>
     <script type="module" src="./src/presenter.js"></script>
   </body>

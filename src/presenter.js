@@ -12,6 +12,8 @@ const botonUsuario = document.querySelector("#botonUsuario");
 const cantidad = Reservarform.cantidad;
 const reservaDetalle = document.getElementById("iddetalle");
 const idProducto = Reservarform.producto;
+const  selectEdit = document.getElementById("select-edit");
+const  selectDelete = document.getElementById("select-delete");
 actualizarMenu("todas");
 
 function actualizarMenu(categoria) {
@@ -34,16 +36,18 @@ function actualizarMenu(categoria) {
   actualizarComboReservar(categoria);
   actualizarReservas();
 }
-
 function actualizarComboReservar(categoria){ 
   productoPorReservar.innerHTML = "";
+  selectEdit.innerHTML = "";
+  selectDelete.innerHTML = "";
   for (const producto of cafeteria.getProductos(categoria)) {
     const option = document.createElement("option");
     option.value = producto.id; option.text = producto.nombre; 
     productoPorReservar.appendChild(option);
+    selectEdit.appendChild(option.cloneNode(true));
+    selectDelete.appendChild(option.cloneNode(true));
   }
 }
-
 function actualizarCategorias(categoria){
   categoriaSeleccionada.innerHTML = "";
   for (const producto of cafeteria.getCategorias()) {
@@ -52,37 +56,49 @@ function actualizarCategorias(categoria){
   }
   categoriaSeleccionada.value = categoria; 
 }
-
 function cambiarPermisos(tipoDeUsuario,display){
   var elementosUsuario = document.querySelectorAll("."+tipoDeUsuario);
   elementosUsuario.forEach(function(elemento) {
   elemento.style.display = display;
   });
 }
-
 function actualizarReservas(){
   reservasList.innerHTML = "";
+  const selectEditReserva = document.getElementById("select-edit-reserva");
+  selectEditReserva.innerHTML = "";
   for (const reserva of cafeteria.getReservas()) {
     const li = document.createElement("li");
     li.textContent = reserva.cantidad + " x " +reserva.producto + " :" + reserva.detalle;
     const confirmar = document.createElement("button"); 
-    confirmar.textContent = "Confirmar"; confirmar.id = reserva.id; confirmar.className = "admincafe"; confirmar.style.display = "none";
+    confirmar.textContent = "Entregado"; confirmar.id = reserva.id; confirmar.className = "admincafe"; confirmar.style.display = "none";
     confirmar.addEventListener("click", function() { confirmarReserva(parseInt(confirmar.id));});
     li.appendChild(confirmar);
     reservasList.appendChild(li);
+    const option = document.createElement("option");
+    option.value = reserva.id;
+    option.text = reserva.cantidad + " x " + reserva.producto;
+    selectEditReserva.appendChild(option);
   }
 }
-
 function confirmarReserva(id){
   cafeteria.confirmarReserva(id);
   actualizarMenu("todas");
   cambiarPermisos("admincafe","block");
 }
-
+const editarReservaForm = document.getElementById("editarReservaForm");
+editarReservaForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const idReserva = parseInt(document.getElementById("select-edit-reserva").value);
+  const nuevaCantidad = parseInt(document.getElementById("nueva-cantidad").value);
+  const nuevoDetalle = document.getElementById("nuevo-detalle").value;
+  const resultado = cafeteria.editarReserva(idReserva, nuevaCantidad, nuevoDetalle);
+  alert(resultado);
+  actualizarReservas();
+  actualizarMenu("todas");
+});
 categoriaSeleccionada.addEventListener("change", function() {
   actualizarMenu(this.value);
 });
-
 Reservarform.addEventListener("submit", (event) => {
   event.preventDefault();  
   const resultado = cafeteria.hacerReserva(parseInt(idProducto.value), cantidad.valueAsNumber, reservaDetalle.value);
@@ -91,7 +107,6 @@ Reservarform.addEventListener("submit", (event) => {
   Reservarform.reset();
   actualizarMenu("todas");
 });
-
 agregarProductoForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const nombre = agregarProductoForm.nombre.value;
@@ -102,7 +117,6 @@ agregarProductoForm.addEventListener("submit", (event) => {
   cafeteria.agregarProducto(nombre, descripcion, precio, categoria, stock, stock);
   actualizarMenu("todas");
 });
-
 botonAdministrador.addEventListener("click", function() {
   cambiarPermisos("admincafe","block");
   cambiarPermisos("usuariocafe","none");
@@ -111,54 +125,21 @@ botonUsuario.addEventListener("click", function() {
   cambiarPermisos("admincafe","none");
   cambiarPermisos("usuariocafe","block");
 });
-
-// Función para llenar los selectores con los productos
 let productos = cafeteria.getProductos("todas");
-
-function llenarSelectores() {
-  var selectEdit = document.getElementById("select-edit");
-  var selectDelete = document.getElementById("select-delete");
-
-  // Limpiar selectores
-  selectEdit.innerHTML = "";
-  selectDelete.innerHTML = "";
-
-  // Llenar selectores con opciones de productos
-  productos.forEach(function(producto) {
-      var option = document.createElement("option");
-      option.value = producto.id;
-      option.text = producto.nombre;
-
-      selectEdit.appendChild(option.cloneNode(true));
-      selectDelete.appendChild(option);
-  });
-}
-
-// Función para editar un producto seleccionado
 window.editarProductoHtml = function() {
   var selectEdit = document.getElementById("select-edit");
   var productId = parseInt(selectEdit.value);
-
-  // Buscar el producto seleccionado en la lista
   var producto = productos.find(function(item) {
       return item.id === productId;
   });
-
   if (producto) {
-      // Mostrar un formulario de edición con los datos del producto
       var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:", producto.nombre);
       var nuevoDescripcion = prompt("Ingrese la nueva descripcion del producto:", producto.descripcion);
       var nuevoPrecio = parseInt(prompt("Ingrese el nuevo precio del producto:", producto.precio));
       var nuevoCategoria = prompt("Ingrese la nueva categoria del producto:", producto.categoria);
-
       if (nuevoNombre && !isNaN(nuevoPrecio)) {
-          // Actualizar los datos del producto
-          // producto.nombre = nuevoNombre;
-          // producto.precio = nuevoPrecio;
           cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria)
-          // producto = cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria)
           alert("El producto se ha editado correctamente.");
-          llenarSelectores();
       } else {
           alert("Los datos ingresados no son válidos.");
       }
@@ -167,28 +148,19 @@ window.editarProductoHtml = function() {
   }
   actualizarMenu("todas");
 }
-
-// Función para eliminar un producto seleccionado
 window.eliminarProductoHtml = function() {
   var selectDelete = document.getElementById("select-delete");
   var productId = parseInt(selectDelete.value);
-
-  // Buscar el producto seleccionado en la lista
   var productoIndex = productos.findIndex(function(item) {
       return item.id === productId;
   });
-
   respuesta = cafeteria.eliminarProducto(productId);
   if (productoIndex !== -1) {
-      // Eliminar el producto de la lista
-      // productos.splice(productoIndex, 1);
       alert(respuesta);
-      llenarSelectores();
   } else {
       alert("No se ha seleccionado ningún producto para eliminar.");
   }
   actualizarMenu("todas");
 }
 
-// Llenar los selectores al cargar la página
-llenarSelectores();
+
