@@ -112,6 +112,33 @@ class Cafeteria {
     return ["Reserva creada", reserva.id, reserva.cantidad + ' x ' + reserva.producto +" : "+ detalle];
   }
 
+  
+  editarReserva(idReserva, new_cantidad, new_detalle) {
+    const reserva = this.reservas.find((r) => r.id === idReserva);
+     if (!reserva) {
+       console.log("Reserva no encontrada");
+       return "Reserva no encontrada";
+     }
+
+  const producto = this.productos.find((p) => p.id === reserva.idProducto);
+  if (!producto) {
+    console.log("Producto asociado a la reserva no encontrado");
+    return "Producto asociado a la reserva no encontrado";
+  }
+
+  if (producto.reservable + reserva.cantidad < new_cantidad) {
+    console.log("No hay suficiente STOCK disponible para la nueva cantidad");
+    return "No hay suficiente STOCK disponible para la nueva cantidad";
+  }
+
+  producto.reservable += reserva.cantidad;
+  producto.reservable -= new_cantidad;
+  reserva.cantidad = new_cantidad;
+  reserva.detalle = new_detalle;
+
+  console.log("Reserva editada:", reserva);
+  return "Reserva editada: " + reserva.cantidad + " x " + producto.nombre + " : " + new_detalle;
+}
   getReservas() {
     return this.reservas;
   }
@@ -136,6 +163,7 @@ class Cafeteria {
     if (reserva) {
       const indexProducto = this.productos.findIndex((p) => p.id === reserva.idProducto);
       this.productos[indexProducto].stock -= reserva.cantidad;
+      this.reservas = this.reservas.filter(reserva => reserva.id !== idReserva);
     }
   }
 }

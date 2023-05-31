@@ -105,17 +105,50 @@ describe("Cafeteria", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
     cafeteria.hacerReserva(3, 5, "detalle original");
-  
     const idReserva = cafeteria.getReservas()[0].id;
     const new_cantidad = 2;
     const new_detalle = "detalle actualizado";
-  
     expect(cafeteria.editarReserva(idReserva, new_cantidad, new_detalle)).toBe(
       "Reserva editada: 2 x Café con leche : detalle actualizado"
     );
     expect(cafeteria.getReservas()[0].cantidad).toEqual(new_cantidad);
     expect(cafeteria.getReservas()[0].detalle).toEqual(new_detalle);
   });
+
+  it("debería devolver 'Reserva no encontrada' al intentar editar una reserva inexistente", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    const idReserva = 123456789;
+    const new_cantidad = 3;
+    const new_detalle = "detalle actualizado";
+    expect(cafeteria.editarReserva(idReserva, new_cantidad, new_detalle)).toBe(
+      "Reserva no encontrada"
+    );
+  });
   
+  it("debería devolver 'Producto asociado a la reserva no encontrado' al intentar editar una reserva cuyo producto no existe", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3, 5, "detalle original");
+    const idReserva = cafeteria.getReservas()[0].id;
+    const new_cantidad = 3;
+    const new_detalle = "detalle actualizado";
+    cafeteria.eliminarProducto(3);
+    expect(cafeteria.editarReserva(idReserva, new_cantidad, new_detalle)).toBe(
+      "Producto asociado a la reserva no encontrado"
+    );
+  });
+  
+  it("debería devolver 'No hay suficiente STOCK disponible para la nueva cantidad' al intentar editar una reserva con una cantidad no disponible", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3, 5, "detalle original");
+    const idReserva = cafeteria.getReservas()[0].id;
+    const new_cantidad = 10; 
+    const new_detalle = "detalle actualizado";
+    expect(cafeteria.editarReserva(idReserva, new_cantidad, new_detalle)).toBe(
+      "No hay suficiente STOCK disponible para la nueva cantidad"
+    );
+  });
 
 });
