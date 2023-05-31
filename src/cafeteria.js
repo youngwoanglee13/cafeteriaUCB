@@ -3,7 +3,6 @@ class Cafeteria {
     this.productos = [];
     this.reservas = [];
   }
-
   agregarProducto(nombre, descripcion, precio, categoria, stock , reservable) {
     const producto = {
       id: Math.floor(Math.random() * 100000),
@@ -18,13 +17,15 @@ class Cafeteria {
     return producto;
   }
 
-  editarProducto(id, new_nombre, new_descripcion, new_precio, new_categoria){
+  editarProducto(id, new_nombre, new_descripcion, new_precio, new_categoria, new_stock){
     const index = this.productos.findIndex(producto => producto.id === id);
     if (index !== -1){
       this.productos[index].nombre = new_nombre;
       this.productos[index].descripcion = new_descripcion;
       this.productos[index].precio = new_precio;
       this.productos[index].categoria = new_categoria;
+      this.productos[index].stock = this.productos[index].stock + parseInt(new_stock);
+      this.productos[index].reservable = this.productos[index].reservable + parseInt(new_stock);
     }else{
       return "No existe el producto"
     }
@@ -38,7 +39,6 @@ class Cafeteria {
     this.productos.splice(productoIndex, 1);
     return "Producto eliminado: " + idProducto;
   }
-
   cargarProductos() {
     this.productos = [
       {
@@ -89,7 +89,6 @@ class Cafeteria {
     ];
   }
   hacerReserva(idProducto, cantidad, detalle) {
-    
     const producto = this.productos.find((p) => p.id === idProducto);
     if (!producto) {
       console.log("Producto no encontrado");
@@ -111,8 +110,6 @@ class Cafeteria {
     console.log("Reserva creada:", reserva);
     return ["Reserva creada", reserva.id, reserva.cantidad + ' x ' + reserva.producto +" : "+ detalle];
   }
-
-  
   editarReserva(idReserva, new_cantidad, new_detalle) {
     const reserva = this.reservas.find((r) => r.id === idReserva);
      if (!reserva) {
@@ -125,22 +122,28 @@ class Cafeteria {
     console.log("Producto asociado a la reserva no encontrado");
     return "Producto asociado a la reserva no encontrado";
   }
-
   if (producto.reservable + reserva.cantidad < new_cantidad) {
     console.log("No hay suficiente STOCK disponible para la nueva cantidad");
     return "No hay suficiente STOCK disponible para la nueva cantidad";
   }
-
   producto.reservable += reserva.cantidad;
   producto.reservable -= new_cantidad;
   reserva.cantidad = new_cantidad;
   reserva.detalle = new_detalle;
-
   console.log("Reserva editada:", reserva);
   return "Reserva editada: " + reserva.cantidad + " x " + producto.nombre + " : " + new_detalle;
 }
   getReservas() {
     return this.reservas;
+  }
+  aumentarStock(idProducto, cantidad) {
+    const producto = this.productos.find((p) => p.id === idProducto);
+    if (producto) {
+      producto.stock += cantidad;
+      producto.reservable += cantidad;
+      return true;
+    }
+    return false;
   }
   getProductos(categoria) {
     if (categoria=="todas") {

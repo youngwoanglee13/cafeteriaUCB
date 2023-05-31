@@ -12,10 +12,11 @@ const botonUsuario = document.querySelector("#botonUsuario");
 const cantidad = Reservarform.cantidad;
 const reservaDetalle = document.getElementById("iddetalle");
 const idProducto = Reservarform.producto;
-const  selectEdit = document.getElementById("select-edit");
-const  selectDelete = document.getElementById("select-delete");
+const selectEdit = document.getElementById("select-edit");
+const selectDelete = document.getElementById("select-delete");
 actualizarMenu("todas");
 
+cambiarPermisos("admincafe","none");
 function actualizarMenu(categoria) {
   let listaProductos = cafeteria.getProductos(categoria);
   lista.innerHTML = "";
@@ -27,7 +28,7 @@ function actualizarMenu(categoria) {
     const reservable = document.createElement("div"); reservable.textContent = "disponible:" + listaProductos[i].reservable;
     const categoria = document.createElement("div"); categoria.textContent = "#" + listaProductos[i].categoria;
     const stock = document.createElement("div"); stock.className = "admincafe";
-    stock.style.display = "none"; stock.textContent = "en stock  :"+listaProductos[i].stock;
+    stock.textContent = "en stock  :"+listaProductos[i].stock;
     li.appendChild(nombre); li.appendChild(descripcion); li.appendChild(precio);
     li.appendChild(reservable); li.appendChild(stock); li.appendChild(categoria);
     lista.appendChild(li);
@@ -137,8 +138,9 @@ window.editarProductoHtml = function() {
       var nuevoDescripcion = prompt("Ingrese la nueva descripcion del producto:", producto.descripcion);
       var nuevoPrecio = parseInt(prompt("Ingrese el nuevo precio del producto:", producto.precio));
       var nuevoCategoria = prompt("Ingrese la nueva categoria del producto:", producto.categoria);
+      var aumentarStock = prompt("Ingrese la cantidad de stock que desea aumentar:", 0);
       if (nuevoNombre && !isNaN(nuevoPrecio)) {
-          cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria)
+          cafeteria.editarProducto(productId, nuevoNombre, nuevoDescripcion, nuevoPrecio, nuevoCategoria, aumentarStock)
           alert("El producto se ha editado correctamente.");
       } else {
           alert("Los datos ingresados no son válidos.");
