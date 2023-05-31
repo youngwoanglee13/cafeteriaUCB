@@ -100,4 +100,22 @@ describe("Cafeteria", () => {
     cafeteria.editarProducto(2, "Café super americano new", "new cafe con agua potable", 15, "cafe new");
     expect(cafeteria.getProductos("cafe new")[0].nombre).toBe("Café super americano new");
   });
+
+  it("debería editar una reserva existente", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3, 5, "detalle original");
+  
+    const idReserva = cafeteria.getReservas()[0].id;
+    const new_cantidad = 2;
+    const new_detalle = "detalle actualizado";
+  
+    expect(cafeteria.editarReserva(idReserva, new_cantidad, new_detalle)).toBe(
+      "Reserva editada: 2 x Café con leche : detalle actualizado"
+    );
+    expect(cafeteria.getReservas()[0].cantidad).toEqual(new_cantidad);
+    expect(cafeteria.getReservas()[0].detalle).toEqual(new_detalle);
+  });
+  
+
 });
