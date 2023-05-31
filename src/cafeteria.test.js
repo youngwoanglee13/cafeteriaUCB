@@ -151,4 +151,14 @@ describe("Cafeteria", () => {
     );
   });
 
+  it("debería aumentar el stock de un producto existente", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    const producto = cafeteria.getProductos("todas")[0]; // Tomamos el primer producto como ejemplo
+    const stockInicial = producto.stock;
+    const cantidadAumento = 3;
+    cafeteria.aumentarStock(producto.id, cantidadAumento);
+    expect(cafeteria.getProductos("todas")[0].stock).toEqual(stockInicial + cantidadAumento);
+  });
+
 });
