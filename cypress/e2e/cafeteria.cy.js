@@ -12,7 +12,7 @@ describe("Cafeteria", () => {
     cy.visit("/");
     cy.get('select#productoPorReservar').select('Lomito');
     cy.get('input#cantidad').type('1');
-    cy.get('button[type="submit"]').click();
+    cy.get('#botonReservar').click();
     cy.get("#reservas li").contains('1 x Lomito :');
   });
   it("Hacer una reserva con detalle", () => {
@@ -20,7 +20,7 @@ describe("Cafeteria", () => {
     cy.get('select#productoPorReservar').select('Pique Macho');
     cy.get('input#cantidad').type('1');
     cy.get('input#iddetalle').type('sin tomate');
-    cy.get('button[type="submit"]').click();
+    cy.get('#botonReservar').click();
     cy.get("#reservas li").contains('1 x Pique Macho :sin tomate');
    
   });
@@ -40,9 +40,16 @@ describe("Cafeteria", () => {
     cy.get('select#productoPorReservar').select('Lomito');
     cy.get('input#cantidad').type('1');
     cy.get('input#iddetalle').type('Sin zanahorias');
-    cy.get('button[type="submit"]').click();
+    cy.get('#botonReservar').click(); 
     cy.get("#botonAdministrador").click();
     cy.get('ul#reservas li button').click();
-    cy.get("#menu-cafeteria #4 .admincafe").should("have.text", "en stock  :6");
-});
+    cy.get("#menu-cafeteria #4 .admincafe").should("have.text", "en stock  :6"); 
+  });
+  it("Se elimina un producto", () => {
+    cy.visit("/");
+    cy.get("#botonAdministrador").click();
+    cy.get('select#select-delete').select('Lomito');
+    cy.get("#botonEliminarProducto").click();
+    cy.get("#menu-cafeteria").should("not.contain", "Lomito");
+  });  
 });
