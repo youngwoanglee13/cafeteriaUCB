@@ -23,7 +23,7 @@ function actualizarMenu(categoria) {
   lista.innerHTML = "";
   for (let i = 0; i < listaProductos.length; i++) {
     const li = document.createElement("li"); li.className = "producto"; li.id = listaProductos[i].id;
-    const nombre = document.createElement("div"); nombre.textContent = listaProductos[i].nombre;
+    const nombre = document.createElement("strong"); nombre.textContent = listaProductos[i].nombre;
     const descripcion = document.createElement("div"); descripcion.textContent = listaProductos[i].descripcion;
     const precio = document.createElement("div"); precio.textContent = listaProductos[i].precio + " Bs.";
     const reservable = document.createElement("div"); reservable.textContent = "disponible:" + listaProductos[i].reservable;

@@ -5,12 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cafeteria UCB</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
     <button id="botonUsuario">USUARIO</button>
     <button id="botonAdministrador">ADMINISTRADOR</button>
-    <h1>Menu Cafeteria</h1>
+    <div class="centered-image">
+      <img src="Imagen/logo.png" alt="Logo de CatoBreak" />
+    </div>
+    
     <label for="idcategoria">Categoria:</label>
     <select id="idcategoria" name="categorias">
       <option value="todas">todas</option>
@@ -92,13 +96,13 @@
         <button type="submitProduct">Agregar</button>
       </form>
 
-      <h1>Editar un producto:</h1>
+      <h1 id="edi1">Editar un producto</h1>
       <label for="select-edit">Selecciona un producto para editar:</label>
       <select id="select-edit"></select>
       <button id="botonEditarProducto" onclick="editarProductoHtml()">Editar Producto</button>
       <br /><br />
 
-      <h1>Eliminar un producto:</h1>
+      <h1 id="eli1">Eliminar un producto</h1>
       <label for="select-delete">Selecciona un producto para eliminar:</label>
       <select id="select-delete"></select>
       <button id="botonEliminarProducto" onclick="eliminarProductoHtml()">Eliminar Producto</button>
