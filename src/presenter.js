@@ -14,6 +14,7 @@ const reservaDetalle = document.getElementById("iddetalle");
 const idProducto = Reservarform.producto;
 const selectEdit = document.getElementById("select-edit");
 const selectDelete = document.getElementById("select-delete");
+const horaInput = document.getElementById('hora-input'); 
 actualizarMenu("todas");
 
 cambiarPermisos("admincafe","none");
@@ -36,6 +37,15 @@ function actualizarMenu(categoria) {
   actualizarCategorias(categoria);
   actualizarComboReservar(categoria);
   actualizarReservas();
+  const ahora = new Date();
+  const horaActual = new Date(ahora.getTime() + 20 * 60000).toLocaleTimeString('en-US', {hour12: false,hour: '2-digit', minute: '2-digit'});
+  horaInput.min = horaActual;horaInput.value = horaActual;
+}
+function cancelarReserva(id){
+  alert(cafeteria.cancelarReserva(id))
+  actualizarMenu("todas");
+  cambiarPermisos("admincafe","none");
+  cambiarPermisos("usuariocafe","block");
 }
 function actualizarComboReservar(categoria){ 
   productoPorReservar.innerHTML = "";
@@ -69,10 +79,13 @@ function actualizarReservas(){
   selectEditReserva.innerHTML = "";
   for (const reserva of cafeteria.getReservas()) {
     const li = document.createElement("li");
-    li.textContent = reserva.cantidad + " x " +reserva.producto + " :" + reserva.detalle;
+    li.textContent = reserva.cantidad + " x " +reserva.producto + " - " + reserva.detalle + " - Entrega a las" + reserva.horaEntrega;
+    const cancelar = document.createElement("button"); cancelar.textContent = "Cancelar"; cancelar.id = reserva.id; cancelar.className = "usuariocafe";
+    cancelar.addEventListener("click", function() { cancelarReserva(parseInt(cancelar.id));});
     const confirmar = document.createElement("button"); 
     confirmar.textContent = "Entregado"; confirmar.id = reserva.id; confirmar.className = "admincafe"; confirmar.style.display = "none";
     confirmar.addEventListener("click", function() { confirmarReserva(parseInt(confirmar.id));});
+    li.appendChild(cancelar);
     li.appendChild(confirmar);
     reservasList.appendChild(li);
     const option = document.createElement("option");
@@ -85,6 +98,7 @@ function confirmarReserva(id){
   cafeteria.confirmarReserva(id);
   actualizarMenu("todas");
   cambiarPermisos("admincafe","block");
+  cambiarPermisos("usuariocafe","none");
 }
 const editarReservaForm = document.getElementById("editarReservaForm");
 editarReservaForm.addEventListener("submit", (event) => {
@@ -94,17 +108,16 @@ editarReservaForm.addEventListener("submit", (event) => {
   const nuevoDetalle = document.getElementById("nuevo-detalle").value;
   const resultado = cafeteria.editarReserva(idReserva, nuevaCantidad, nuevoDetalle);
   alert(resultado);
-  actualizarReservas();
   actualizarMenu("todas");
 });
 categoriaSeleccionada.addEventListener("change", function() {
   actualizarMenu(this.value);
 });
 Reservarform.addEventListener("submit", (event) => {
-  event.preventDefault();  
-  const resultado = cafeteria.hacerReserva(parseInt(idProducto.value), cantidad.valueAsNumber, reservaDetalle.value);
+  event.preventDefault();
+  console.log(horaInput.value);
+  const resultado = cafeteria.hacerReserva(parseInt(idProducto.value), cantidad.valueAsNumber, reservaDetalle.value, horaInput.value);
   alert(resultado[0]);
-  actualizarReservas();
   Reservarform.reset();
   actualizarMenu("todas");
 });
@@ -153,10 +166,10 @@ window.editarProductoHtml = function() {
 window.eliminarProductoHtml = function() {
   var selectDelete = document.getElementById("select-delete");
   var productId = parseInt(selectDelete.value);
-  var productoIndex = productos.findIndex(function(item) {
-      return item.id === productId;
-  });
-  respuesta = cafeteria.eliminarProducto(productId);
+   var productoIndex = productos.findIndex(function(item) {
+       return item.id === productId;
+   });
+  const respuesta = cafeteria.eliminarProducto(productId);
   if (productoIndex !== -1) {
       alert(respuesta);
   } else {
