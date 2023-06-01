@@ -16,18 +16,18 @@ describe("Cafeteria", () => {
   it("al reservar, deberia aumentar el tamaño de la lista reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3,5,"");
+    cafeteria.hacerReserva(3,5,"","");
     expect(cafeteria.getReservas().length).toEqual(1);
   });
   it("al reservar, si el producto no existe devuelve: Producto no encontrado", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(10,2,"")[0]).toBe('Producto no encontrado');
+    expect(cafeteria.hacerReserva(10,2,"","")[0]).toBe('Producto no encontrado');
   });
   it("al reservar, si la cantidad del producto es demaciada: No hay suficiente STOCK disponible", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    expect(cafeteria.hacerReserva(3,22,"")[0]).toBe('No hay suficiente STOCK disponible');
+    expect(cafeteria.hacerReserva(3,22,"","")[0]).toBe('No hay suficiente STOCK disponible');
   });
   it("deberia eliminar un producto existente", () => {
   const cafeteria = new Cafeteria();
@@ -57,7 +57,7 @@ describe("Cafeteria", () => {
   it("al reservar, el detalle reserva se agrega a la reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3,5,"detalle nuevo");
+    cafeteria.hacerReserva(3,5,"detalle nuevo","");
     expect(cafeteria.getReservas()[cafeteria.getReservas().length-1].detalle).toEqual("detalle nuevo");
   });
   it("debería agregar un nuevo producto a la lista de productos", () => {
@@ -84,7 +84,7 @@ describe("Cafeteria", () => {
   it("debería bajar el stock al momento de confirmar una reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.agregarProducto("Café Latte", "Delicioso café con leche", 3.5, "Bebidas", 1, 1);
-    cafeteria.hacerReserva(cafeteria.getProductos("todas")[0].id,1,"sin azucar");
+    cafeteria.hacerReserva(cafeteria.getProductos("todas")[0].id,1,"sin azucar","");
     cafeteria.confirmarReserva(cafeteria.getReservas()[0].id);
     expect(cafeteria.getProductos("todas")[0].stock).toEqual(0);
   });
@@ -104,7 +104,7 @@ describe("Cafeteria", () => {
   it("debería editar una reserva existente", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3, 5, "detalle original");
+    cafeteria.hacerReserva(3, 5, "detalle original","");
     const idReserva = cafeteria.getReservas()[0].id;
     const new_cantidad = 2;
     const new_detalle = "detalle actualizado";
@@ -129,7 +129,7 @@ describe("Cafeteria", () => {
   it("debería devolver 'Producto asociado a la reserva no encontrado' al intentar editar una reserva cuyo producto no existe", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3, 5, "detalle original");
+    cafeteria.hacerReserva(3, 5, "detalle original","");
     const idReserva = cafeteria.getReservas()[0].id;
     const new_cantidad = 3;
     const new_detalle = "detalle actualizado";
@@ -142,7 +142,7 @@ describe("Cafeteria", () => {
   it("debería devolver 'No hay suficiente STOCK disponible para la nueva cantidad' al intentar editar una reserva con una cantidad no disponible", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3, 5, "detalle original");
+    cafeteria.hacerReserva(3, 5, "detalle original","");
     const idReserva = cafeteria.getReservas()[0].id;
     const new_cantidad = 10; 
     const new_detalle = "detalle actualizado";
@@ -163,9 +163,16 @@ describe("Cafeteria", () => {
   it("deberia cancelar una reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
-    cafeteria.hacerReserva(3,5,"detalle");
+    cafeteria.hacerReserva(3,5,"detalle","");
     expect(cafeteria.getReservas().length).toEqual(1);
     cafeteria.cancelarReserva(cafeteria.getReservas()[0].id);
     expect(cafeteria.getReservas().length).toEqual(0);
   });
+  it("deberia crear una reserva con hora", () => {
+    const cafeteria = new Cafeteria();
+    cafeteria.cargarProductos();
+    cafeteria.hacerReserva(3,5,"detalle", "10:00");
+    expect(cafeteria.getReservas()[0].hora).not.toEqual(null);
+  }); 
+  
 });
