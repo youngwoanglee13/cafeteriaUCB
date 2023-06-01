@@ -37,6 +37,11 @@ function actualizarMenu(categoria) {
   actualizarComboReservar(categoria);
   actualizarReservas();
 }
+function cancelarReserva(id){
+  cafeteria.cancelarReserva(id);
+  actualizarMenu("todas");
+  cambiarPermisos("admincafe","none");
+}
 function actualizarComboReservar(categoria){ 
   productoPorReservar.innerHTML = "";
   selectEdit.innerHTML = "";
@@ -70,9 +75,12 @@ function actualizarReservas(){
   for (const reserva of cafeteria.getReservas()) {
     const li = document.createElement("li");
     li.textContent = reserva.cantidad + " x " +reserva.producto + " :" + reserva.detalle;
+    const cancelar = document.createElement("button"); cancelar.textContent = "Cancelar"; cancelar.id = reserva.id; cancelar.className = "usuariocafe";
+    cancelar.addEventListener("click", function() { cancelarReserva(parseInt(cancelar.id));});
     const confirmar = document.createElement("button"); 
     confirmar.textContent = "Entregado"; confirmar.id = reserva.id; confirmar.className = "admincafe"; confirmar.style.display = "none";
     confirmar.addEventListener("click", function() { confirmarReserva(parseInt(confirmar.id));});
+    li.appendChild(cancelar);
     li.appendChild(confirmar);
     reservasList.appendChild(li);
     const option = document.createElement("option");
@@ -153,10 +161,10 @@ window.editarProductoHtml = function() {
 window.eliminarProductoHtml = function() {
   var selectDelete = document.getElementById("select-delete");
   var productId = parseInt(selectDelete.value);
-  var productoIndex = productos.findIndex(function(item) {
-      return item.id === productId;
-  });
-  respuesta = cafeteria.eliminarProducto(productId);
+   var productoIndex = productos.findIndex(function(item) {
+       return item.id === productId;
+   });
+  const respuesta = cafeteria.eliminarProducto(productId);
   if (productoIndex !== -1) {
       alert(respuesta);
   } else {
