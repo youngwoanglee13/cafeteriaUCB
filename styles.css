@@ -1,0 +1,175 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
+  /* Estilos de la barra de navegación */
+  .navbar {
+    background-color: #e9ecef;
+    padding: 10px 20px;
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+    
+  }
+  
+  .nav-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  /* Estilos del formulario */
+  form {
+    margin-bottom: 20px;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  form input,
+  form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  form button[type="submit"] {
+    background-color: #20c997;
+    color: #fff;
+  }
+  
+  /* Estilos de la lista */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  ul li {
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  ul li h2 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos de la sección de usuario */
+  .usuariocafe {
+    display: none;
+    background-color: #FFA500;
+    padding: 20px;
+    border-radius: 4px;
+  }
+  
+  .usuariocafe button {
+    background-color: #ff6f00;
+  }
+  
+  .usuariocafe input[type="submit"] {
+    background-color: #ff6f00;
+  }
+  
+  /* Estilos de la sección de administrador */
+  .admincafe {
+    display: none;
+    background-color: #ffc107;
+    padding: 20px;
+    border-radius: 4px;
+  }
+  
+  .admincafe button {
+    background-color: #007bff;
+  }
+  
+  .admincafe input[type="submit"] {
+    background-color: #FF8C00;
+  }
+  
+  /* Estilos para la imagen */
+  .centered-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Ajusta la altura deseada */
+    margin-bottom: 20px;
+  }
+  
+  .centered-image img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  #eli1 {
+    text-align: left;
+  }
+
+  #edi1 {
+    text-align:left;
+  }
+  

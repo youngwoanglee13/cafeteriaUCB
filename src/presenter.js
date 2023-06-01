@@ -23,7 +23,7 @@ function actualizarMenu(categoria) {
   lista.innerHTML = "";
   for (let i = 0; i < listaProductos.length; i++) {
     const li = document.createElement("li"); li.className = "producto"; li.id = listaProductos[i].id;
-    const nombre = document.createElement("div"); nombre.textContent = listaProductos[i].nombre;
+    const nombre = document.createElement("strong"); nombre.textContent = listaProductos[i].nombre;
     const descripcion = document.createElement("div"); descripcion.textContent = listaProductos[i].descripcion;
     const precio = document.createElement("div"); precio.textContent = listaProductos[i].precio + " Bs.";
     const reservable = document.createElement("div"); reservable.textContent = "disponible:" + listaProductos[i].reservable;
@@ -79,7 +79,7 @@ function actualizarReservas(){
   selectEditReserva.innerHTML = "";
   for (const reserva of cafeteria.getReservas()) {
     const li = document.createElement("li");
-    li.textContent = reserva.cantidad + " x " +reserva.producto + " - " + reserva.detalle + " - Entrega a las" + reserva.horaEntrega;
+    li.textContent = reserva.cantidad + " x " +reserva.producto + " - " + reserva.detalle + " - Entrega a las " + reserva.horaEntrega;
     const cancelar = document.createElement("button"); cancelar.textContent = "Cancelar"; cancelar.id = reserva.id; cancelar.className = "usuariocafe";
     cancelar.addEventListener("click", function() { cancelarReserva(parseInt(cancelar.id));});
     const confirmar = document.createElement("button"); 
