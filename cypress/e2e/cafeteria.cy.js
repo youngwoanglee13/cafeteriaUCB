@@ -12,17 +12,18 @@ describe("Cafeteria", () => {
     cy.visit("/");
     cy.get('select#productoPorReservar').select('Lomito');
     cy.get('input#cantidad').type('1');
+    cy.get('input#hora-input').type("23:59");
     cy.get('#botonReservar').click();
-    cy.get("#reservas li").contains('1 x Lomito :');
+    cy.get("#reservas li").contains('1 x Lomito - - Entrega a las23:59');
   });
   it("Hacer una reserva con detalle", () => {
     cy.visit("/");
     cy.get('select#productoPorReservar').select('Pique Macho');
     cy.get('input#cantidad').type('1');
     cy.get('input#iddetalle').type('sin tomate');
+    cy.get('input#hora-input').type("23:59");
     cy.get('#botonReservar').click();
-    cy.get("#reservas li").contains('1 x Pique Macho :sin tomate');
-   
+    cy.get("#reservas li").contains('1 x Pique Macho - sin tomate - Entrega a las23:59');
   });
   it("Agrega un nuevo producto a la lista de productos", () => {
     cy.visit("/");
