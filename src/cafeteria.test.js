@@ -160,13 +160,12 @@ describe("Cafeteria", () => {
     cafeteria.aumentarStock(producto.id, cantidadAumento);
     expect(cafeteria.getProductos("todas")[0].stock).toEqual(stockInicial + cantidadAumento);
   });
-
-  it("deberia eliminar una reserva", () => {
+  it("deberia cancelar una reserva", () => {
     const cafeteria = new Cafeteria();
     cafeteria.cargarProductos();
     cafeteria.hacerReserva(3,5,"detalle");
     expect(cafeteria.getReservas().length).toEqual(1);
-    cafeteria.eliminarReserva(cafeteria.getReservas()[0].id);
+    cafeteria.cancelarReserva(cafeteria.getReservas()[0].id);
     expect(cafeteria.getReservas().length).toEqual(0);
   });
 });

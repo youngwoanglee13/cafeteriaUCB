@@ -169,5 +169,13 @@ class Cafeteria {
       this.reservas = this.reservas.filter(reserva => reserva.id !== idReserva);
     }
   }
+  cancelarReserva(idReserva) {
+    const reserva = this.reservas.find((r) => r.id === idReserva);
+    if (reserva) {
+      const indexProducto = this.productos.findIndex((p) => p.id === reserva.idProducto);
+      this.productos[indexProducto].reservable += reserva.cantidad;
+      this.reservas = this.reservas.filter(reserva => reserva.id !== idReserva);
+    }
+  }
 }
 export default Cafeteria;
